@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redline Equipment · Keep your operation moving</title>
+  <meta name="description" content="Equipment, parts, service, and nine Redline Equipment stores across Ohio, Michigan, and Indiana. Start with what you need.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #141414;
+      --muted: #5c564f;
+      --red: #c8102e;
+      --red-deep: #8d0c1c;
+      --paper: #f3efe8;
+      --card: #fff;
+      --line: #e4dcd3;
+      --focus: #0b5cab;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--red-deep); }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .skip {
+      position: absolute; left: 1rem; top: -4rem; z-index: 30;
+      background: #fff; color: var(--ink); padding: 0.55rem 0.9rem;
+    }
+    .skip:focus { top: 0.6rem; }
+    .wrap { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+    h1, h2, .price, .brand {
+      font-family: "Barlow Condensed", Impact, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 0.92;
+    }
+    .top {
+      position: sticky; top: 0; z-index: 20;
+      background: #fff; color: var(--ink);
+      border-bottom: 3px solid var(--red);
+    }
+    .top .wrap { display: flex; align-items: center; gap: 1.5rem; min-height: 76px; }
+    .brand { display: flex; align-items: center; text-decoration: none; }
+    .brand img { height: 52px; width: auto; display: block; }
+    nav { margin-left: auto; display: flex; align-items: center; gap: 1.15rem; }
+    nav a { color: var(--ink); text-decoration: none; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; }
+    nav a:hover { color: var(--red); }
+    .call {
+      background: var(--red); color: #fff !important;
+      padding: 0.65rem 0.9rem; min-height: 44px;
+      display: inline-flex; align-items: center;
+    }
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: #fff;
+      background: #1a120f url("images/hero.jpg") center 42% / cover no-repeat;
+      padding: 5.5rem 0 2.2rem;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.18) 38%, rgba(0,0,0,.72) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.05) 58%);
+    }
+    .hero .wrap { position: relative; text-align: left; }
+    .hero-copy { margin: 0 0 1.4rem; max-width: 40rem; text-align: left; }
+    .kicker {
+      margin: 0 0 0.55rem;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em;
+    }
+    h1 { font-size: clamp(3.4rem, 8vw, 6.4rem); margin: 0 0 0.8rem; max-width: 10ch; }
+    .lede { margin: 0 0 0.45rem; font-size: 1.2rem; max-width: 36rem; }
+    .lede.soft { color: #f0e6df; font-size: 1.02rem; }
+    .finder {
+      background: #fff; color: var(--ink);
+      padding: 1rem 1rem 1.05rem;
+      box-shadow: 0 22px 50px rgba(0,0,0,.35);
+    }
+    .finder-label {
+      margin: 0 0 0.7rem;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+    }
+    .choices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.55rem; }
+    .choices button {
+      font: inherit; text-align: left; cursor: pointer;
+      background: #f7f4ef; color: var(--ink);
+      border: 1px solid var(--line);
+      min-height: 92px; padding: 0.75rem 0.8rem;
+    }
+    .choices button[aria-selected="true"] {
+      background: #141414; color: #fff; border-color: #141414;
+    }
+    .choices svg { display: block; margin-bottom: 0.45rem; }
+    .choices strong { display: block; font-size: 0.95rem; letter-spacing: 0.04em; }
+    .choices span { display: block; font-size: 0.86rem; color: var(--muted); margin-top: 0.1rem; }
+    .choices button[aria-selected="true"] span { color: #ddd4cc; }
+    .panel { padding-top: 1rem; }
+    .panel[hidden] { display: none; }
+    .panel h3 { margin: 0 0 0.2rem; font-size: 1.35rem; }
+    .panel .intro { margin: 0 0 0.8rem; color: var(--muted); }
+    .fields { display: grid; gap: 0.7rem; align-items: end; }
+    .fields.eq { grid-template-columns: 1.3fr 0.8fr 1fr auto; }
+    .fields.parts { grid-template-columns: 1fr auto 1fr auto 1fr 0.9fr; }
+    .fields.svc { grid-template-columns: 1.1fr 1fr 1fr 1fr; }
+    .fields.store { grid-template-columns: 1fr auto; max-width: 36rem; }
+    .or { align-self: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); padding-bottom: 0.7rem; }
+    label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.28rem; }
+    input, select {
+      width: 100%; font: inherit; color: var(--ink);
+      min-height: 48px; padding: 0.4rem 0.7rem;
+      border: 1px solid #cfc6bc; background: #fff;
+    }
+    .go, .linkbtn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 48px; padding: 0.7rem 1rem;
+      background: var(--red); color: #fff; border: 0;
+      font: inherit; font-weight: 700; letter-spacing: 0.04em;
+      text-decoration: none; cursor: pointer;
+    }
+    .go:hover, .linkbtn:hover { background: var(--red-deep); color: #fff; }
+    .error { color: var(--red-deep); font-weight: 700; margin: 0.55rem 0 0; }
+    .results { display: grid; gap: 0.7rem; margin-top: 0.9rem; }
+    .equip-card, .answer {
+      background: #f7f4ef; border: 1px solid var(--line); padding: 1rem 1.05rem;
+    }
+    .equip-card h3, .answer h3 { margin: 0.15rem 0; font-size: 1.45rem; line-height: 1; }
+    .meta { margin: 0; color: var(--muted); }
+    .price { font-size: 2rem; margin: 0.25rem 0 0.45rem; }
+    .locs {
+      margin: 0.75rem 0 0; color: #f4ece6;
+      font-size: 0.92rem; letter-spacing: 0.04em;
+    }
+    .section, .service, .cta { scroll-margin-top: 78px; }
+    .section { padding: 4.2rem 0; }
+    h2 { font-size: clamp(2.3rem, 5vw, 3.6rem); margin: 0 0 0.45rem; max-width: 16ch; }
+    .sub { margin: 0 0 1.3rem; color: var(--muted); max-width: 38rem; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .feature-card {
+      background: #fff; border-top: 4px solid var(--red);
+      padding: 1.2rem 1.2rem 1.3rem;
+    }
+    .feature-card h3 { margin: 0.2rem 0; font-size: 1.7rem; }
+    .more { margin-top: 1.1rem; display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+    .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    .tile {
+      background: #fff; min-height: 180px; padding: 1.1rem;
+      border-top: 4px solid var(--red);
+    }
+    .tile h3 { margin: 0 0 0.35rem; }
+    .tile p { margin: 0; color: var(--muted); }
+    .split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 2rem; align-items: center; }
+    .split img { width: 100%; height: 100%; max-height: 520px; object-fit: cover; }
+    .service {
+      position: relative; color: #fff;
+      background: #1a0b0c url("images/hero.jpg") center 60% / cover no-repeat;
+      padding: 4.5rem 0;
+    }
+    .service::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(90,8,16,.92), rgba(20,8,8,.78));
+    }
+    .service .wrap { position: relative; }
+    .service h2, .service p { color: #fff; }
+    .service .sub { color: #f3ddd9; }
+    .service-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 2rem; align-items: start; }
+    .service form, .after {
+      background: #fff; color: var(--ink); padding: 1.1rem;
+    }
+    .after { margin-top: 0.75rem; }
+    .after h3 { margin: 0 0 0.25rem; }
+    .why { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 1.5rem; align-items: center; }
+    .why img { width: 100%; height: 460px; object-fit: cover; }
+    .points { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .points article { background: #fff; padding: 1rem; }
+    .points h3 { margin: 0 0 0.3rem; font-size: 1rem; letter-spacing: 0.06em; }
+    .points p { margin: 0; color: var(--muted); }
+    .states { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem; }
+    .states h3 { margin: 0 0 0.55rem; letter-spacing: 0.12em; font-size: 0.85rem; }
+    .store {
+      background: #fff; padding: 0.85rem 0.95rem; margin-bottom: 0.5rem;
+      border-left: 3px solid var(--red);
+    }
+    .store strong { display: block; }
+    .store[hidden] { display: none; }
+    .cta {
+      background: #111; color: #fff; text-align: center; padding: 4rem 0;
+    }
+    .cta h2 { margin-left: auto; margin-right: auto; }
+    .cta p { color: #e6ddd6; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-top: 1.2rem; }
+    .cta .linkbtn { background: transparent; border: 1px solid #fff; }
+    .cta .linkbtn:hover { background: var(--red); border-color: var(--red); }
+    .foot { background: #0e0e0e; color: #efe8e2; padding: 1.6rem 0 2rem; }
+    .foot a { color: #fff; }
+    .foot small { color: #b7aea6; }
+    @media (max-width: 980px) {
+      .choices, .tiles, .states { grid-template-columns: 1fr 1fr; }
+      .fields.eq, .fields.parts, .fields.svc, .split, .service-grid, .why, .feature-grid { grid-template-columns: 1fr; }
+      .or { display: none; }
+      nav a:not(.call) { display: none; }
+      .why img, .split img { height: 260px; }
+    }
+    @media (max-width: 620px) {
+      .choices, .tiles, .states, .points { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 2.2rem; }
+      h1 { font-size: 3.3rem; }
+      .more { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#finder">Skip to search</a>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#top"><img src="images/logo.png" alt="Redline Equipment" width="174" height="64"></a>
+      <nav aria-label="Primary">
+        <a href="#equipment">EQUIPMENT</a>
+        <a href="#parts">PARTS</a>
+        <a href="#service">SERVICE</a>
+        <a href="#stores">LOCATIONS</a>
+        <a class="call" href="tel:+14194450810">CALL REDLINE</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-copy">
+          <p class="kicker">WHAT DO YOU NEED TODAY?</p>
+          <h1>Keep your operation moving.</h1>
+          <p class="lede">Equipment. Parts. Service. Your Redline store — all in one place.</p>
+          <p class="lede soft">Whether you're looking for your next machine, tracking down a part, getting service, or finding your nearest store, start here.</p>
+        </div>
+        <div class="finder" id="finder">
+          <p class="finder-label">WHAT CAN WE HELP YOU FIND?</p>
+          <div class="choices" role="tablist" aria-label="What can we help you find?">
+            <button id="tab-equip" type="button" role="tab" aria-selected="true" aria-controls="panel-equip">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 15.5h1.6a2.6 2.6 0 0 0 5.1 0h4.6a2.6 2.6 0 0 0 5.1 0H21v-2.2h-2.2L16.4 9H9.2V7H4.2v8.5H3zm4.2 1.3a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm9.6 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6z"/></svg>
+              <strong>EQUIPMENT</strong>
+              <span>Find your next machine</span>
+            </button>
+            <button id="tab-parts" type="button" role="tab" aria-selected="false" aria-controls="panel-parts" tabindex="-1">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>
+              <strong>PARTS</strong>
+              <span>Find the right part</span>
+            </button>
+            <button id="tab-service" type="button" role="tab" aria-selected="false" aria-controls="panel-service" tabindex="-1">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L3 18l3 3 6.1-6.1a4 4 0 0 0 5.6-5.6l-2.3 2.3-2.2-2.2z"/></svg>
+              <strong>SERVICE</strong>
+              <span>Get help from your store</span>
+            </button>
+            <button id="tab-store" type="button" role="tab" aria-selected="false" aria-controls="panel-store" tabindex="-1">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+              <strong>A STORE</strong>
+              <span>Find your location</span>
+            </button>
+          </div>
+
+          <div id="panel-equip" class="panel" role="tabpanel" aria-labelledby="tab-equip">
+            <h3>Find the right equipment.</h3>
+            <p class="intro">Search new and pre-owned equipment by type, condition, and location.</p>
+            <form id="equip-form">
+              <div class="fields eq">
+                <div>
+                  <label for="equip-type">What are you looking for?</label>
+                  <select id="equip-type">
+                    <option>All</option>
+                    <option>Tractors</option>
+                    <option>Harvesting</option>
+                    <option>Planting &amp; Seeding</option>
+                    <option>Tillage</option>
+                    <option>Application Equipment</option>
+                    <option>Balers</option>
+                    <option>Mowers &amp; Conditioners</option>
+                    <option>Precision Technology</option>
+                    <option>Skid Steers and Track Loaders</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="equip-cond">Condition</label>
+                  <select id="equip-cond">
+                    <option>Either</option>
+                    <option>New</option>
+                    <option>Pre-Owned</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="equip-store">Location</label>
+                  <select id="equip-store"></select>
+                </div>
+                <button class="go" type="submit">SEARCH EQUIPMENT</button>
+              </div>
+            </form>
+            <div id="equip-results" class="results" aria-live="polite"></div>
+          </div>
+
+          <div id="panel-parts" class="panel" role="tabpanel" aria-labelledby="tab-parts" hidden>
+            <h3>Need a part? Start with what you know.</h3>
+            <p class="intro">Part number, serial number, or just tell us what you're looking for. You don't need the exact part.</p>
+            <form id="parts-form">
+              <div class="fields parts">
+                <div>
+                  <label for="part-no">Part number</label>
+                  <input id="part-no" autocomplete="off">
+                </div>
+                <span class="or">OR</span>
+                <div>
+                  <label for="serial">Serial number</label>
+                  <input id="serial" autocomplete="off">
+                </div>
+                <span class="or">OR</span>
+                <div>
+                  <label for="desc">Description</label>
+                  <input id="desc" autocomplete="off" placeholder="filter, belt, meter">
+                </div>
+                <div>
+                  <label for="parts-store">Pickup location</label>
+                  <select id="parts-store"></select>
+                </div>
+              </div>
+              <p id="parts-error" class="error" hidden>Enter a part number, a serial number, or a description.</p>
+              <p class="intro">Your search continues through MyRedlineDealer, for Case IH, Case Construction, and New Holland parts.</p>
+              <button class="go" type="submit">FIND MY PART</button>
+            </form>
+            <div id="parts-results" class="results" aria-live="polite"></div>
+          </div>
+
+          <div id="panel-service" class="panel" role="tabpanel" aria-labelledby="tab-service" hidden>
+            <h3>Choose your machine and Redline location.</h3>
+            <p class="intro">We'll give you the store number to call.</p>
+            <form id="service-form">
+              <div class="fields svc">
+                <div>
+                  <label for="svc-machine">Machine</label>
+                  <select id="svc-machine">
+                    <option>Tractor</option>
+                    <option>Combine or Head</option>
+                    <option>Planter or Drill</option>
+                    <option>Sprayer</option>
+                    <option>Hay Equipment</option>
+                    <option>Other Make or Model</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="svc-store">Store</label>
+                  <select id="svc-store"></select>
+                </div>
+                <div>
+                  <label for="svc-name">Your name</label>
+                  <input id="svc-name" required autocomplete="name">
+                </div>
+                <div>
+                  <label for="svc-phone">Your phone</label>
+                  <input id="svc-phone" type="tel" required autocomplete="tel">
+                </div>
+              </div>
+              <p><button class="go" type="submit">GET MY STORE'S NUMBER</button></p>
+            </form>
+            <div id="service-results" class="results" aria-live="polite"></div>
+          </div>
+
+          <div id="panel-store" class="panel" role="tabpanel" aria-labelledby="tab-store" hidden>
+            <h3>Find a Redline location by city or state.</h3>
+            <form id="store-form">
+              <div class="fields store">
+                <div>
+                  <label for="store-q">City or state</label>
+                  <input id="store-q" placeholder="Archbold, Ohio, Indiana">
+                </div>
+                <button class="go" type="submit">FIND MY STORE</button>
+              </div>
+            </form>
+            <div id="store-results" class="results" aria-live="polite"></div>
+          </div>
+        </div>
+        <p class="locs">9 locations &nbsp;·&nbsp; Ohio &nbsp;·&nbsp; Michigan &nbsp;·&nbsp; Indiana</p>
+      </div>
+    </section>
+
+    <section class="section" id="equipment">
+      <div class="wrap">
+        <h2>Featured on the floor.</h2>
+        <p class="sub">Two units from the current inventory. Everything else opens the full Redline list.</p>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <p class="meta">Pre-Owned · Gas City, IN</p>
+            <h3>2017 Case IH Magnum 180</h3>
+            <p class="price">$106,222</p>
+            <p class="meta">Tractors · 2WD &amp; MFD · Stock 01019530015B</p>
+            <p><a class="linkbtn" href="https://www.redlineequipment.com/--xallinventory">VIEW EQUIPMENT</a></p>
+          </article>
+          <article class="feature-card">
+            <p class="meta">Pre-Owned · Archbold, OH</p>
+            <h3>2014 Killbros 1185</h3>
+            <p class="price">$26,242</p>
+            <p class="meta">Harvesting · Grain carts · Stock 0101026281A</p>
+            <p><a class="linkbtn" href="https://www.redlineequipment.com/--xallinventory">VIEW EQUIPMENT</a></p>
+          </article>
+        </div>
+        <div class="more">
+          <div>
+            <strong>Looking for something else?</strong>
+            <p class="meta">Explore the complete Redline inventory.</p>
+          </div>
+          <a class="linkbtn" href="https://www.redlineequipment.com/--xallinventory">VIEW ALL INVENTORY</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="partner" style="padding-top:0">
+      <div class="wrap">
+        <h2>More than a dealer. A partner in the field.</h2>
+        <p class="sub">From planting to harvest, Redline is built around keeping your operation moving.</p>
+        <div class="tiles">
+          <article class="tile">
+            <h3>Equipment</h3>
+            <p>New and pre-owned machines from the brands you trust.</p>
+          </article>
+          <article class="tile">
+            <h3>Parts</h3>
+            <p>Find what you need by part number, serial number, or description.</p>
+          </article>
+          <article class="tile">
+            <h3>Service</h3>
+            <p>Get connected directly with your Redline store, including after hours.</p>
+          </article>
+          <article class="tile">
+            <h3>Local support</h3>
+            <p>Nine locations across Ohio, Michigan, and Indiana.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="parts" style="background:#fff">
+      <div class="wrap split">
+        <img src="images/tractor.jpg" alt="International tractor with the engine bay open, ready for parts and service">
+        <div>
+          <h2>Need a part? Start with what you know.</h2>
+          <p class="sub">Part number. Serial number. Or just tell us what you're looking for. You don't need to know the exact part.</p>
+          <form id="parts-form-page">
+            <div class="fields" style="grid-template-columns:1fr 1fr">
+              <div>
+                <label for="part-no-2">Part number</label>
+                <input id="part-no-2" autocomplete="off">
+              </div>
+              <div>
+                <label for="serial-2">Serial number</label>
+                <input id="serial-2" autocomplete="off">
+              </div>
+              <div>
+                <label for="desc-2">Description</label>
+                <input id="desc-2" autocomplete="off" placeholder="filter, belt, meter">
+              </div>
+              <div>
+                <label for="parts-store-2">Pickup location</label>
+                <select id="parts-store-2"></select>
+              </div>
+            </div>
+            <p id="parts-error-2" class="error" hidden>Enter a part number, a serial number, or a description.</p>
+            <p class="intro" style="color:var(--muted)">Your search continues through MyRedlineDealer, where you can find parts for Case IH, Case Construction, and New Holland.</p>
+            <button class="go" type="submit">FIND MY PART</button>
+          </form>
+          <div id="parts-results-2" class="results" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="service" id="service">
+      <div class="wrap service-grid">
+        <div>
+          <p class="kicker">SERVICE</p>
+          <h2>When your machine stops, we start moving.</h2>
+          <p class="sub">Choose your machine and Redline location. We'll give you the store number to call.</p>
+        </div>
+        <div>
+          <form id="service-form-page">
+            <div class="fields" style="grid-template-columns:1fr 1fr">
+              <div>
+                <label for="svc-machine-2">Machine</label>
+                <select id="svc-machine-2">
+                  <option>Tractor</option>
+                  <option>Combine or Head</option>
+                  <option>Planter or Drill</option>
+                  <option>Sprayer</option>
+                  <option>Hay Equipment</option>
+                  <option>Other Make or Model</option>
+                </select>
+              </div>
+              <div>
+                <label for="svc-store-2">Store</label>
+                <select id="svc-store-2"></select>
+              </div>
+              <div>
+                <label for="svc-name-2">Your name</label>
+                <input id="svc-name-2" required autocomplete="name">
+              </div>
+              <div>
+                <label for="svc-phone-2">Your phone</label>
+                <input id="svc-phone-2" type="tel" required autocomplete="tel">
+              </div>
+            </div>
+            <p><button class="go" type="submit">GET MY STORE'S NUMBER</button></p>
+          </form>
+          <div id="service-results-2" class="results" aria-live="polite"></div>
+          <div class="after">
+            <h3>Need help after hours?</h3>
+            <p class="meta">Call the same store number. The on-call person answers the store line, not a staff cell.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="why">
+      <div class="wrap why">
+        <img src="images/field.jpg" alt="Harvest equipment working a field, seen from above">
+        <div>
+          <h2>Built around your operation.</h2>
+          <div class="points">
+            <article>
+              <h3>LOCAL PEOPLE</h3>
+              <p>Nine locations across three states, close to the farms and operations we serve.</p>
+            </article>
+            <article>
+              <h3>REAL EQUIPMENT</h3>
+              <p>Shop new and pre-owned equipment across the Redline network.</p>
+            </article>
+            <article>
+              <h3>REAL SUPPORT</h3>
+              <p>Parts and service when you need them, not only during convenient hours.</p>
+            </article>
+            <article>
+              <h3>ONE PLACE TO START</h3>
+              <p>Equipment, parts, service, and locations from one search.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stores" style="padding-top:0">
+      <div class="wrap">
+        <h2>Your Redline is closer than you think.</h2>
+        <p class="sub">Find a Redline location by city or state.</p>
+        <form id="store-form-page">
+          <div class="fields store">
+            <div>
+              <label for="store-q-2">City or state</label>
+              <input id="store-q-2" placeholder="Enter city or state">
+            </div>
+            <button class="go" type="submit">FIND MY STORE</button>
+          </div>
+        </form>
+        <div class="states" id="state-board">
+          <div>
+            <h3>OHIO</h3>
+            <article class="store" data-place="archbold ohio oh"><strong>Archbold</strong><span>5270 State Route 66 N</span><br><a href="tel:+14194450810">(419) 445-0810</a></article>
+            <article class="store" data-place="bellevue ohio oh"><strong>Bellevue</strong><a href="tel:+14194834970">(419) 483-4970</a></article>
+            <article class="store" data-place="ottawa ohio oh"><strong>Ottawa</strong><a href="tel:+14195234131">(419) 523-4131</a></article>
+            <article class="store" data-place="sherwood ohio oh"><strong>Sherwood</strong><a href="tel:+14198992151">(419) 899-2151</a></article>
+          </div>
+          <div>
+            <h3>MICHIGAN</h3>
+            <article class="store" data-place="adrian michigan mi ag"><strong>Adrian</strong><span>Ag</span><br><a href="tel:+15172631395">(517) 263-1395</a></article>
+            <article class="store" data-place="litchfield michigan mi"><strong>Litchfield</strong><a href="tel:+15175422376">(517) 542-2376</a></article>
+          </div>
+          <div>
+            <h3>INDIANA</h3>
+            <article class="store" data-place="gas city indiana in"><strong>Gas City</strong><a href="tel:+17656743703">(765) 674-3703</a></article>
+            <article class="store" data-place="logansport indiana in"><strong>Logansport</strong><a href="tel:+15747221999">(574) 722-1999</a></article>
+            <article class="store" data-place="topeka indiana in"><strong>Topeka</strong><a href="tel:+12605933000">(260) 593-3000</a></article>
+          </div>
+        </div>
+        <p id="store-empty" class="error" hidden>No store by that name. Try a city, or OH, MI, or IN.</p>
+      </div>
+    </section>
+
+    <section class="cta" id="today">
+      <div class="wrap">
+        <h2>What do you need today?</h2>
+        <div class="cta-row">
+          <a class="linkbtn" href="#equipment">SHOP INVENTORY</a>
+          <a class="linkbtn" href="#parts">FIND PARTS</a>
+          <a class="linkbtn" href="#service">GET SERVICE</a>
+          <a class="linkbtn" href="#stores">FIND A STORE</a>
+        </div>
+        <p>Redline Equipment<br>Any season. Any reason. Any time.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <strong>Redline Equipment</strong>
+      <p>5270 State Route 66 N, Archbold, OH 43502<br>
+        <a href="tel:+14194450810">(419) 445-0810</a> · <a href="mailto:sales@redlineequipment.com">sales@redlineequipment.com</a>
+      </p>
+      <small>Authorized Case IH dealer. Archbold Equipment rebranded as Redline Equipment in 2017. Owned by more than 80 shareholders across Ohio, Michigan, and Indiana.</small>
+    </div>
+  </footer>
+
+  <script>
+    const stores = [
+      { city: "Archbold", state: "OH", phone: "(419) 445-0810", tel: "+14194450810" },
+      { city: "Bellevue", state: "OH", phone: "(419) 483-4970", tel: "+14194834970" },
+      { city: "Ottawa", state: "OH", phone: "(419) 523-4131", tel: "+14195234131" },
+      { city: "Sherwood", state: "OH", phone: "(419) 899-2151", tel: "+14198992151" },
+      { city: "Adrian", state: "MI", phone: "(517) 263-1395", tel: "+15172631395", note: "Ag" },
+      { city: "Litchfield", state: "MI", phone: "(517) 542-2376", tel: "+15175422376" },
+      { city: "Gas City", state: "IN", phone: "(765) 674-3703", tel: "+17656743703" },
+      { city: "Logansport", state: "IN", phone: "(574) 722-1999", tel: "+15747221999" },
+      { city: "Topeka", state: "IN", phone: "(260) 593-3000", tel: "+12605933000" }
+    ];
+    const units = [
+      { year: 2017, make: "Case IH", model: "Magnum 180", type: "Tractors", condition: "Pre-Owned", location: "Gas City", state: "IN", price: "$106,222", stock: "01019530015B", klass: "2WD & MFD" },
+      { year: 2014, make: "Killbros", model: "1185", type: "Harvesting", condition: "Pre-Owned", location: "Archbold", state: "OH", price: "$26,242", stock: "0101026281A", klass: "Grain carts" }
+    ];
+    const inventory = "https://www.redlineequipment.com/--xallinventory";
+    const partsUrl = "https://www.redlineequipment.com/--cnh";
+
+    function fillStores(select, includeAll) {
+      select.innerHTML = "";
+      if (includeAll) {
+        const all = document.createElement("option");
+        all.value = "All";
+        all.textContent = "All stores";
+        select.appendChild(all);
+      }
+      stores.forEach((s) => {
+        const opt = document.createElement("option");
+        opt.value = s.city;
+        opt.textContent = s.city + ", " + s.state + (s.note ? " (" + s.note + ")" : "");
+        select.appendChild(opt);
+      });
+    }
+    fillStores(document.getElementById("equip-store"), true);
+    fillStores(document.getElementById("parts-store"), false);
+    fillStores(document.getElementById("parts-store-2"), false);
+    fillStores(document.getElementById("svc-store"), false);
+    fillStores(document.getElementById("svc-store-2"), false);
+
+    const tabs = [...document.querySelectorAll("[role=tab]")];
+    function selectTab(index) {
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+        document.getElementById(tab.getAttribute("aria-controls")).hidden = !on;
+      });
+    }
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => selectTab(i));
+      tab.addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+        e.preventDefault();
+        const next = e.key === "ArrowRight" ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+        selectTab(next);
+        tabs[next].focus();
+      });
+    });
+
+    function byCity(city) { return stores.find((s) => s.city === city); }
+
+    function unitCard(u) {
+      return "<article class=\"equip-card\"><p class=\"meta\">" + u.condition + " · " + u.location + ", " + u.state + "</p><h3>" + u.year + " " + u.make + " " + u.model + "</h3><p class=\"price\">" + u.price + "</p><p class=\"meta\">" + u.klass + " · Stock " + u.stock + "</p><p><a href=\"" + inventory + "\">VIEW EQUIPMENT</a></p></article>";
+    }
+
+    document.getElementById("equip-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const type = document.getElementById("equip-type").value;
+      const cond = document.getElementById("equip-cond").value;
+      const store = document.getElementById("equip-store").value;
+      const found = units.filter((u) =>
+        (type === "All" || u.type === type) &&
+        (cond === "Either" || u.condition === cond) &&
+        (store === "All" || u.location === store)
+      );
+      const box = document.getElementById("equip-results");
+      if (!found.length) {
+        box.innerHTML = "<article class=\"answer\"><h3>Looking for something else?</h3><p>Explore the complete Redline inventory.</p><p><a class=\"linkbtn\" href=\"" + inventory + "\">VIEW ALL INVENTORY</a></p></article>";
+        return;
+      }
+      box.innerHTML = found.map(unitCard).join("") + "<article class=\"answer\"><p>Looking for something else?</p><p><a href=\"" + inventory + "\">VIEW ALL INVENTORY</a></p></article>";
+    });
+
+    function partsSearch(part, serial, desc, city, errEl, box) {
+      if (!part && !serial && !desc) {
+        errEl.hidden = false;
+        box.innerHTML = "";
+        return;
+      }
+      errEl.hidden = true;
+      const store = byCity(city);
+      const how = part ? "part number " + part : serial ? "serial " + serial : "\u201c" + desc + "\u201d";
+      box.innerHTML = "<article class=\"answer\"><h3>Continue in MyRedlineDealer</h3><p>Look up " + how + ". Pick up at " + store.city + ", " + store.state + ".</p><p><a class=\"linkbtn\" href=\"" + partsUrl + "\">FIND MY PART</a></p></article>";
+    }
+    document.getElementById("parts-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      partsSearch(
+        document.getElementById("part-no").value.trim(),
+        document.getElementById("serial").value.trim(),
+        document.getElementById("desc").value.trim(),
+        document.getElementById("parts-store").value,
+        document.getElementById("parts-error"),
+        document.getElementById("parts-results")
+      );
+    });
+    document.getElementById("parts-form-page").addEventListener("submit", (e) => {
+      e.preventDefault();
+      partsSearch(
+        document.getElementById("part-no-2").value.trim(),
+        document.getElementById("serial-2").value.trim(),
+        document.getElementById("desc-2").value.trim(),
+        document.getElementById("parts-store-2").value,
+        document.getElementById("parts-error-2"),
+        document.getElementById("parts-results-2")
+      );
+    });
+
+    function serviceResult(machine, city, name, phone, box) {
+      const store = byCity(city);
+      const subject = encodeURIComponent("Service request — " + store.city);
+      const body = encodeURIComponent(name + "\n" + phone + "\n" + machine + "\nStore: " + store.city + ", " + store.state);
+      box.innerHTML = "<article class=\"answer\"><h3>Call " + store.city + "</h3><p class=\"price\"><a href=\"tel:" + store.tel + "\">" + store.phone + "</a></p><p>" + name + " · " + machine + ". This is the store line, including after hours.</p><p><a href=\"mailto:sales@redlineequipment.com?subject=" + subject + "&body=" + body + "\">Email this request</a></p></article>";
+    }
+    document.getElementById("service-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      serviceResult(document.getElementById("svc-machine").value, document.getElementById("svc-store").value, document.getElementById("svc-name").value.trim(), document.getElementById("svc-phone").value.trim(), document.getElementById("service-results"));
+    });
+    document.getElementById("service-form-page").addEventListener("submit", (e) => {
+      e.preventDefault();
+      serviceResult(document.getElementById("svc-machine-2").value, document.getElementById("svc-store-2").value, document.getElementById("svc-name-2").value.trim(), document.getElementById("svc-phone-2").value.trim(), document.getElementById("service-results-2"));
+    });
+
+    function renderStoreHits(q, box) {
+      const query = q.trim().toLowerCase();
+      const found = stores.filter((s) => !query || (s.city + " " + s.state + " " + (s.note || "")).toLowerCase().includes(query));
+      if (!found.length) {
+        box.innerHTML = "<article class=\"answer\"><h3>No store by that name</h3><p>Try a city, or OH, MI, or IN.</p></article>";
+        return;
+      }
+      box.innerHTML = found.map((s) => "<article class=\"equip-card\"><h3>" + s.city + ", " + s.state + (s.note ? " (" + s.note + ")" : "") + "</h3><p><a href=\"tel:" + s.tel + "\">" + s.phone + "</a></p></article>").join("");
+    }
+    document.getElementById("store-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      renderStoreHits(document.getElementById("store-q").value, document.getElementById("store-results"));
+    });
+    document.getElementById("store-form-page").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = document.getElementById("store-q-2").value.trim().toLowerCase();
+      const cards = [...document.querySelectorAll("#state-board .store")];
+      let shown = 0;
+      cards.forEach((card) => {
+        const on = !q || card.dataset.place.includes(q);
+        card.hidden = !on;
+        if (on) shown += 1;
+      });
+      document.getElementById("store-empty").hidden = shown > 0;
+    });
+  </script>
+</body>
+</html>
